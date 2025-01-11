@@ -33,9 +33,7 @@ class User {
 		$statement = $this->database->prepare("SELECT * FROM tb_user WHERE username = :username AND password = :password");
 		$statement->execute(array("username"=>$username, "password"=>$password));
 
-		$result = $statement->fetch(
-
-        );
+		$result = $statement->fetch();
 
 		// Create SESSION variables for logged in user
 		if ($result) {
@@ -53,7 +51,7 @@ class User {
 		$statement->execute(array("userid"=>$userid));
 		$result = $statement->fetch();
 
-		return $result ? $result['role'] : '';
+		return $result ? $result['username'] : '';
 	}
 
 	public function logout() {
