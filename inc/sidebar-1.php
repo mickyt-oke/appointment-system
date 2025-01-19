@@ -18,11 +18,7 @@
 										<li><a href="#">Channel</a></li>
 									</ul>
 			</nav>
-							<div class="col-sm-12 align-center">
-                        <button type="submit" class="button secondary small">
-							<a href="logout.php"><i class="fas fa-user"></i>Logout </a>
-                        </button>
-                      </div>
+
 							<!-- Footer -->
 								<footer id="footer">
 									<p class="copyright">&copy; 2024 | NIS | All rights reserved</p>

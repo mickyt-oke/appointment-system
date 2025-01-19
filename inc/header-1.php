@@ -36,6 +36,10 @@
 	<link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
   <link rel="stylesheet" href="assets/css/vendor.bundle.base.css">
   <link rel="stylesheet" href="assets/css/vendor.bundle.addons.css">
+  <?php if(@$_GET['q']) {
+    echo'<script>alert("'.@$_GET['q'].'");</script>';
+}
+?>
 	</head>
 	<body class="is-preload">
 		
@@ -48,9 +52,11 @@
 
 							<!-- Header -->
 								<header id="header">
-									<a href="#" class="logo"><strong>Welcome, </strong><?php echo $user->getName($_SESSION['us3rid']); ?></a>
+									<a href="#" class="logo"><strong>Welcome Admin</a>
 									<ul class="icons">
-										<li>Current Login: <?php $timestamp = time(); echo(date("D F j, Y  g:i a", $timestamp)) ?></li>
-									</ul>
+						<li>Current Login: <?php $timestamp = time();
+											echo (date("D F j, Y  g:i a", $timestamp)) ?></li>
+							<a href="logout.php" class="button secondary small" type="submit"><i class="fas fa-user"></i>Logout </a>
+					</ul>
 								</header>
 		

@@ -1,40 +1,47 @@
 <?php
-require_once 'config/dbConfig.php';
-require_once 'config/dbConnection.php';
+require_once 'config/init-1.php';
 
+// Initialize variables
+$errors = [];
+$message = '';
+
+// Create a database connection
+$connection = (new Connection('localhost', 'appt_db', 'root', ''))->connect();
 // Check if the checkout action is requested
-if (isset($_POST["checkout"])) {
-    // Sanitize and validate the input
-    $id = intval($_POST["checkout"]);
+if (isset($_GET["checkout"])) {
+    $id = $_GET["checkout"];
 
-    // Prepare the SQL statement to update the record
-    $sql = "UPDATE tb_appt SET isactive = 2, checkout = NOW() WHERE id = ?";
-    
-    // Use prepared statements to prevent SQL injection
-    if ($stmt = $this->databse->prepare($sql)) {
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
+    try {
+        // Prepare the SQL query
+        $query = "UPDATE tb_appt SET isactive = 0, status_id = 3, checkout = NOW() WHERE id = :id";
+
+        // Prepare the statement
+        $statement = $connection->prepare($query);
+
+        // Bind the parameter
+        $statement->bindParam(':id', $id);
+
+        // Execute the query
+        $result = $statement->execute();
 
         // Check if any rows were affected
-        if ($stmt->affected_rows > 0) {
-            $message = "Guest checked out successfully.";
+        if ($result && $statement->rowCount() > 0) {
+            $message = "Guest checked out successfully";
         } else {
-            $errors[] = "No record found with the given ID.";
+            $errors[] = "No record found with the given ID";
         }
-
-        $stmt->close();
-    } else {
-        $errors[] = "Database error: Unable to prepare the statement.";
+    } catch (PDOException $e) {
+        $errors[] = "Database error: " . $e->getMessage();
     }
 } else {
-    $errors[] = "Invalid request.";
+    $errors[] = "Invalid request";
 }
 
 // Redirect to the dashboard with appropriate messages
 $url = "dashboard.php";
 if (!empty($errors)) {
     $url .= "?error=" . urlencode(implode(", ", $errors));
-} elseif (isset($message)) {
+} elseif (!empty($message)) {
     $url .= "?message=" . urlencode($message);
 }
 

@@ -1,0 +1,28 @@
+    <div class="modal-header border-0 pb-0">
+      <h5 class="modal-title m-0">Authenticate</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body p-0 m-5 m-4-xs">
+
+      <div class="accordion" id="accordionAccount">
+
+        <!-- sign in -->
+        <form role="form" action="token.php?" method="post">
+          <div class="form-floating mb-3">
+
+            <input required placeholder="" type="password" class="form-control" id="token" name="token" minlength="6" maxlength="6" pattern="[0-9]{6}" title="Please enter a valid 6 digit token code" aria-describedby="tokenHelp">
+            <label for="token">Token Code</label>
+            <div class="invalid-feedback">Please enter your token code</div>
+          </div>
+          <!-- button -->
+          <button type="submit" class="btn btn-primary w-100 text-white" id="submit" name="submit">
+            Login
+          </button>
+
+        </form>
+        <!-- /sign in -->
+
+      </div>
+
+    </div>

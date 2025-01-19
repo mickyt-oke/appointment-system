@@ -122,7 +122,7 @@ if ($entry->tagIdExists($entry->tagid, $db)) {
 							  <option value="PA-ICT">PA-ICT</option>
 							  <option value="SA-PROTOCOL">SA-PROTOCOL</option>
 							  <option value="SA-SECURITY">SA-SECURITY</option>
-							  <option value="SA-PSO">SA-PSO</option>
+							  <option value="CSO">CSO</option>
 							  <option value="ACG-ICT">ACG-ICT</option>
 							  <option value="ACG-FA">DCG-F/A</option>
 							  <option value="ACG-VISA">DCG-VISA</option>
@@ -145,7 +145,7 @@ if ($entry->tagIdExists($entry->tagid, $db)) {
                             <option value="Dr">Dr</option>
                             <option value="Engr">Engr</option>
                             <option value="Chief">Chief</option>
-                            <option value="hrh">HRH</option>
+                            <option value="HRH">HRH</option>
 							</select>
 							<label for="title">Title</label>
                         </div>

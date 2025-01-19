@@ -6,9 +6,9 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			<script src="assets/js/main-2.js"></script>
-    		<!--<script src="assets/js/core.min.js"></script>
+    		<script src="assets/js/core.min.js"></script>
     		<script src="assets/js/vendor_bundle.min.js"></script>
-    		<script src="assets/js/theme.docs.js"></script> -->
+    		<script src="assets/js/theme.docs.js"></script>
 
 			<script>
 		$(function(e) {

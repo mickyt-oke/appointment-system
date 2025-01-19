@@ -43,6 +43,8 @@ require_once 'config/dbConfig.php';
 		</div>
 	</div>
 </section>
+<?php error($errors);
+success($message); ?>
 <div class="row">
 	<div class="col-md-12">
 		<div class="card shadow">
@@ -51,7 +53,7 @@ require_once 'config/dbConfig.php';
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
-					<form method="get" action="checkout.php">
+					<!-- table to display checked in guests and checkout button -->
 					<table id="example" class="table table-striped w-100 text-nowrap">
 						<thead>
 							<tr>
@@ -67,8 +69,8 @@ require_once 'config/dbConfig.php';
 						</thead>
 						<tbody>
 							<?php $users = $entry->getApptForToday();
-							if (isset($_SESSION['us3rid'])): ?>
-								<?php $x = 1;
+							if (isset($_SESSION['us3rid'])): 
+								 $x = 1;
 								foreach ($users as $user): ?>
 
 									<tr>
@@ -79,24 +81,24 @@ require_once 'config/dbConfig.php';
 										<td><?php echo $user['checkin']; ?></td>
 										<td><?php echo $user['hostid']; ?></td>
 										<td><?php echo $user['status_id']; ?></td>
+										<!-- checkout button to checkout guest with ajax confirmation -->
 										<td>
 											<a href="#"
-												data-href="checkout.php"
+												data-href="checkout.php?checkout=<?= $user['id']; ?>"
 												class="js-ajax-confirm button small"
 												data-ajax-confirm-mode="regular"
 												data-ajax-confirm-size="modal-md"
 												data-ajax-confirm-centered="false"
-												data-ajax-confirm-title="Please Confirm"
-												data-ajax-confirm-body="Are you sure Guest is ready to leave?"
+												data-ajax-confirm-title="Confirm Guest Checkout"
+												data-ajax-confirm-body="Are you sure the guest is ready to leave?"
 												data-ajax-confirm-btn-yes-class="btn-sm btn-danger"
 												data-ajax-confirm-btn-yes-text="Confirm"
 												data-ajax-confirm-btn-yes-icon="fi fi-check"
 												data-ajax-confirm-btn-no-class="btn-sm btn-light"
 												data-ajax-confirm-btn-no-text="Cancel"
 												data-ajax-confirm-btn-no-icon="fi fi-close">
-												CHECKOUT
+												Checkout
 											</a>
-											<input type="hidden" name="checkout" value="checkout" />
 										</td>
 									</tr>
 								<?php $x++;
@@ -104,7 +106,7 @@ require_once 'config/dbConfig.php';
 						</tbody>
 					<?php endif; ?>
 					</table>
-					</form>
+
 				</div>
 			</div>
 		</div>

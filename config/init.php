@@ -25,8 +25,8 @@ define("APP_ROOT", dirname(dirname(__FILE__)).DS);
 require_once "core/common.php";
 require_once "core/functions.php";
 
-// Objects/instances of classes
 $user = new User();
+$entry = new Entry();
 $session = new Session();
 $message = $session->message();
 

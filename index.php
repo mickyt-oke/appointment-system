@@ -1,28 +1,36 @@
-<?php require_once 'config/init.php';
+<?php
+require_once 'config/init.php';
 
+if (isset($_POST['login'])) {
+    // Sanitize and validate input
+    $user->username = trim($_POST['username']);
+    $user->password = trim($_POST['password']);
 
-    if (count($_POST)>0){
-
-	// Process form request
-  if (isset($_POST['login'])) {
-      $user->username = trim($_POST['username']);
-      $user->password = trim($_POST['password']);
-
-    // Ensure no field is empty
-    if (!empty($user->username) && !empty($user->password)) {
-      // Hash password
+  // Ensure no field is empty
+  if (!empty($user->username) && !empty($user->password)) {
       $user->password = md5($user->password);
-      if ($user->login($user->username, $user->password)) {
-		  $_SESSION['loggedin_time'] = time();
-        ($_SESSION['us3rgr0up'] == 118) ? redirectTo('welcome.php') : redirectTo('dashboard.php');
-      }
-      else {
-        $errors[] = "Authentication failed. Wrong credentials";
-		  header ("Location:$ref?q=Wrong Username or Password.");
-      }
-    }
-    else {
-      $errors[] = "All fields are required.";
+    if ($user->login($user->username, $user->password)) {
+            $_SESSION['loggedin_time'] = time();
+
+            // Redirect based on user group
+            if ($_SESSION['us3rgr0up'] == 118) {
+                redirectTo('welcome.php');
+            } elseif ($_SESSION['us3rgr0up'] == 119) {
+                    redirectTo('dash.php');
+                } elseif ($_SESSION['us3rgr0up'] == 120) {
+                  redirectTo('dash2.php');
+                } elseif ($_SESSION['us3rgr0up'] == 121) {
+                  redirectTo('dash3.php');
+                }
+                elseif ($_SESSION['us3rgr0up'] == 329) {
+                  redirectTo('dashboard.php');
+        } else {
+            $errors[] = "Username or Usergroup not found.";
+            header("Location: $ref?q=Wrong Username or Usergroup");
+        }
+    } else {
+        $errors[] = "Authentication failed. Wrong credentials.";
+        header("Location: $ref?q=Wrong Username or Password");
     }
   }
 }

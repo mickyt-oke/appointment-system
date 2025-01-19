@@ -1,7 +1,7 @@
 <?php
 class User {
 	private $database;
-	public $userid, $username, $password, $usergroup, $role, $isactive, $created;
+	public $userid, $username, $password, $usergroup, $hostid, $isactive, $created;
 
 	public function __construct() {
 		$this->database = new Connection();
@@ -39,15 +39,16 @@ class User {
 		if ($result) {
 			$_SESSION['us3rid'] = $result['userid'];
 			$_SESSION['us3rgr0up'] = $result['usergroup'];
+			$_SESSION['hostid'] = $result['hostid'];	
             $_SESSION['loggedin_time'] = $result['loggedin_time'];
-			$_SESSION['1s@dmin'] = ($result['usergroup'] == 118) ? true : false;
+			$_SESSION['1s@dmin'] = ($result['usergroup'] == 119) ? true : false;
 		}
 
 		return $result ? true : false;
 	}
 	
 	public function getName($userid) {
-		$statement = $this->database->prepare("SELECT role FROM tb_user WHERE userid = :userid");
+		$statement = $this->database->prepare("SELECT * FROM tb_user WHERE userid = :userid");
 		$statement->execute(array("userid"=>$userid));
 		$result = $statement->fetch();
 

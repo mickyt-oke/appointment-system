@@ -114,15 +114,23 @@ function isAdmin(){
 	return $_SESSION['1s@dmin'] ? true : false;
 }
 
-function isLoginSessionExpired(){
-    $login_session_duration = 600000;
-    $current_time = time();
-    if(isset($_SESSION['loggedin_time']) and isset($_SESSION["profile"])){
-        if(((time() - $_SESSION['loggedin_time']) >$login_session_duration)){
-            return true;
-    }
-}
-return false;
+function isLoginSessionExpired() {
+  $loginSessionDuration = 300; // Session duration in seconds (5 minutes)
+  $currentTime = time();
+
+  // Check if the necessary session variables are set
+  if (isset($_SESSION['loggedin_time'], $_SESSION['profile'])) {
+      // Calculate the time elapsed since the user logged in
+      $timeElapsed = $currentTime - $_SESSION['loggedin_time'];
+
+      // Check if the session has expired
+      if ($timeElapsed > $loginSessionDuration) {
+          return true;
+      }
+  }
+
+  // If the session is still valid or the necessary session variables are not set
+  return false;
 }
 /* Working with Dates */
 function datetime_to_text($date="") {
