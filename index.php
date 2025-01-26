@@ -25,8 +25,8 @@ if (isset($_POST['login'])) {
                 elseif ($_SESSION['us3rgr0up'] == 329) {
                   redirectTo('dashboard.php');
         } else {
-            $errors[] = "Username or Usergroup not found.";
-            header("Location: $ref?q=Wrong Username or Usergroup");
+            $errors[] = "User not found";
+            header("Location: $ref?q=NO Usergroup Found");
         }
     } else {
         $errors[] = "Authentication failed. Wrong credentials.";

@@ -54,7 +54,7 @@ class Entry {
 	}
 
 	public function tagIdExists($tagid, $db) {
-		$sql = "SELECT tagid FROM tb_appt WHERE tagid = ?";
+		$sql = "SELECT tagid FROM tb_appt WHERE tagid = ? && isactive = 1";
 		$stmt = $this->database->prepare($sql);
 		$stmt->bindParam(1, $tagid);
 		$stmt->execute();
@@ -80,6 +80,15 @@ class Entry {
 		$statement = $this->database->prepare("SELECT * FROM tb_appt WHERE hostid = :hostid && isactive = 1 && status_id = 1");
 		$statement->execute(array(':hostid' => $hostid));
 		$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+		return $result ? $result : false;
+	}
+
+	public function getGuest($tagid) {
+		$statement = $this->database->prepare("SELECT * FROM tb_appt WHERE tagid = ?");
+		$statement->bindParam(1, $tagid);
+		$statement->execute();
+		$result = $statement->fetch();
 
 		return $result ? $result : false;
 	}
@@ -126,7 +135,7 @@ class Entry {
 // function to get records day by day
 	public function getApptForToday() {
 		try{
-		$stmt =  $this->database->prepare("SELECT * FROM tb_appt where isactive = 1");
+		$stmt =  $this->database->prepare("SELECT * FROM tb_appt where isactive = 1 && DATE(checkin) = CURDATE() ORDER BY checkin DESC");
 		$stmt->execute();
 		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		return $result;

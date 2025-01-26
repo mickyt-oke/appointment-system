@@ -110,8 +110,18 @@ function admin(){
 	}
 }
 
+function superAdmin(){
+	if (!isAdm1n()){
+		redirectTo('index.php');
+	}
+}
+
 function isAdmin(){
 	return $_SESSION['1s@dmin'] ? true : false;
+}
+
+function isAdm1n(){
+	return $_SESSION['@dm1n'] ? true : false;
 }
 
 function isLoginSessionExpired() {

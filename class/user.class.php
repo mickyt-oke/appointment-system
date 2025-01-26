@@ -30,7 +30,7 @@ class User {
 	}
 
 	public function login($username, $password) {
-		$statement = $this->database->prepare("SELECT * FROM tb_user WHERE username = :username AND password = :password");
+		$statement = $this->database->prepare("SELECT * FROM tb_user WHERE username = :username AND password = :password && isactive = 1");
 		$statement->execute(array("username"=>$username, "password"=>$password));
 
 		$result = $statement->fetch();
@@ -42,6 +42,7 @@ class User {
 			$_SESSION['hostid'] = $result['hostid'];	
             $_SESSION['loggedin_time'] = $result['loggedin_time'];
 			$_SESSION['1s@dmin'] = ($result['usergroup'] == 119) ? true : false;
+			$_SESSION['@dm1n'] = ($result['usergroup'] == 118) ? true : false;
 		}
 
 		return $result ? true : false;

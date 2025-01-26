@@ -17,7 +17,6 @@ if (isset($_GET["checkout"])) {
 
         // Prepare the statement
         $statement = $connection->prepare($query);
-
         // Bind the parameter
         $statement->bindParam(':id', $id);
 
