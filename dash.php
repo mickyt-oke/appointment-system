@@ -56,7 +56,7 @@ if (!isAdmin()) {
                     <button class="button medium">Waiting Guests</button>
                 </div>
                 <div class="list-wrapper py-3">
-                    <table id="example" class="table table-striped w-100 text-nowrap">
+                    <table id="example1" class="table table-striped w-100 text-nowrap">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -112,7 +112,7 @@ if (!isAdmin()) {
     <?php if (isset($_REQUEST['approve'])) {
         $guest = mysqli_query($con, "SELECT * FROM tb_appt WHERE full_name = '" . $_REQUEST['approve'] . "'");
         $row = mysqli_fetch_array($guest);
-        if ($row['status_id'] == 1) {
+        if ($row) {
             ?>
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">

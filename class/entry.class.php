@@ -92,9 +92,9 @@ class Entry {
 
 		return $result ? $result : false;
 	}
-
+	//per day count
 	public function countAll() {
-		$statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt ");
+		$statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE DATE(checkin) = CURDATE()");
 		$statement->execute();
 		$result = $statement->fetch();
 
@@ -102,7 +102,7 @@ class Entry {
 	}
 	
 	public function countApprovedGuests() {
-		$statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 2 && isactive = 1");
+		$statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 2 && isactive = 1 && DATE(checkin) = CURDATE()");
 		$statement->execute();
 		$result = $statement->fetch();
 
@@ -110,7 +110,7 @@ class Entry {
 	}
 	
 	public function countPendingGuests() {
-	    $statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 1 && isactive = 1");
+	    $statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 1 && isactive = 1 && DATE(checkin) = CURDATE()");
 	    $statement->execute();
 	    $result = $statement->fetch();
 
@@ -118,7 +118,7 @@ class Entry {
     }
 	
 	public function countRefused() {
-	    $statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 4 && isactive = 1");
+	    $statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 4 && isactive = 1 && DATE(checkin) = CURDATE()");
 	    $statement->execute();
 	    $result = $statement->fetch();
 
@@ -126,7 +126,7 @@ class Entry {
     }
 	
 	public function countCheckOut() {
-	    $statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 3");
+	    $statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 3 && DATE(checkout) = CURDATE()");
 	    $statement->execute();
 	    $result = $statement->fetch();
 
@@ -135,7 +135,7 @@ class Entry {
 // function to get records day by day
 	public function getApptForToday() {
 		try{
-		$stmt =  $this->database->prepare("SELECT * FROM tb_appt where isactive = 1 && DATE(checkin) = CURDATE() ORDER BY checkin DESC");
+		$stmt =  $this->database->prepare("SELECT * FROM tb_appt WHERE DATE(checkin) = CURDATE() && isactive = 1");
 		$stmt->execute();
 		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		return $result;
@@ -145,6 +145,15 @@ class Entry {
         return []; // Return an empty array in case of error
     	}
 	}
+// function to interpret status id from tb_status join tb_appt where status_id = :status_id
+	public function getStatusById($status_id) {
+		$statement = $this->database->prepare("SELECT tb_status.status FROM tb_status JOIN tb_appt ON tb_status.id = tb_appt.status_id WHERE tb_appt.status_id = :status_id");
+		$statement->execute(array(':status_id' => $status_id));
+		$result = $statement->fetch();
+
+		return $result ? $result : false;
+	}
+
 	public function getTagbyId() {
 		$statement = $this->database->prepare("SELECT * FROM tb_appt");
 		$statement->execute();
@@ -169,7 +178,7 @@ class Entry {
 	}
 
 	public function countAllByHost($hostid) {
-		$statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE hostid = :hostid");
+		$statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE hostid = :hostid && DATE(checkin) = CURDATE()");
 		$statement->execute(array(':hostid' => $hostid));
 		$result = $statement->fetch();
 
@@ -177,7 +186,7 @@ class Entry {
 	}
 	
 	public function countApprovedByHost($hostid) {
-		$statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 2 && isactive = 1 && hostid = :hostid");
+		$statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 2 && isactive = 1 && hostid = :hostid && DATE(checkin) = CURDATE()");
 		$statement->execute(array(':hostid' => $hostid));
 		$result = $statement->fetch();
 

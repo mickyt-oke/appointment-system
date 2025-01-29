@@ -15,7 +15,7 @@ if (isset($_GET["checkout"])) {
         // Prepare the SQL query
         $query = "UPDATE tb_appt SET isactive = 0, status_id = 3, checkout = NOW() WHERE id = :id";
 
-        // Prepare the statement
+        // Prepare the statement 
         $statement = $connection->prepare($query);
         // Bind the parameter
         $statement->bindParam(':id', $id);

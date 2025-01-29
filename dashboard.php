@@ -45,6 +45,7 @@ require_once 'config/dbConfig.php';
 </section>
 <?php error($errors);
 success($message); ?>
+<!-- CHECKED IN GUEST SECTION -->
 <div class="row">
 	<div class="col-md-12">
 		<div class="card shadow">
@@ -80,7 +81,23 @@ success($message); ?>
 										<td><?php echo $user['tagid']; ?></td>
 										<td><?php echo $user['checkin']; ?></td>
 										<td><?php echo $user['hostid']; ?></td>
-										<td><?php echo $user['status_id']; ?></td>
+										<!-- --display status of guest with button with color labels PENDING: btn-primary , APPROVED: btn-success, REFERED: btn-danger, CHECKEDOUT: btn-danger  -->
+										<td>
+										<?php $status = $entry->getStatusById($user['status_id']);
+											if ($status) {
+												 ?>
+											<?php if ($status['status'] == 'PENDING'): ?>
+												<button class="btn btn-primary btn-sm text-white">PENDING</button>
+											<?php elseif ($status['status'] == 'APPROVED'): ?>
+												<button class="btn btn-success btn-sm text-white">APPROVED</button>
+											<?php elseif ($status['status'] == 'REFERED'): ?>
+												<button class="btn btn-danger btn-sm text-white">REFERED</button>
+											<?php elseif ($status['status'] == 'CHECKEDOUT'): ?>
+												<button class="btn btn-danger btn-sm text-white">CHECKEDOUT</button>
+											<?php endif; 
+											}
+											?>
+										</td>
 										<!-- checkout button to checkout guest with ajax confirmation -->
 										<td>
 											<a href="#"
@@ -89,7 +106,7 @@ success($message); ?>
 												data-ajax-confirm-mode="regular"
 												data-ajax-confirm-size="modal-md"
 												data-ajax-confirm-centered="false"
-												data-ajax-confirm-title="Confirm Guest Checkout"
+												data-ajax- confirm-title="Confirm Guest Checkout"
 												data-ajax-confirm-body="Are you sure the guest is ready to leave?"
 												data-ajax-confirm-btn-yes-class="btn-sm btn-danger"
 												data-ajax-confirm-btn-yes-text="Confirm"
