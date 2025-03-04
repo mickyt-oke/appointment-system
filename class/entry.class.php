@@ -43,15 +43,15 @@ class Entry {
 	
 			// Execute the statement
 			$statement->execute();
-	
-			// Optionally, return the last inserted ID
-			return $this->database->lastInsertId();
-		} catch (PDOException $e) {
-			// Log the error and handle it appropriately
-			error_log("Error creating entry: " . $e->getMessage());
-			return false;
+			// construct session message
+			$_SESSION['message'] = "Visitor's Form submitted successfully with ID:" . $this->tagid;
+			return true;
+			} catch (PDOException $e) {
+				// Log the error and handle it appropriately
+				error_log("Error creating entry: " . $e->getMessage());
+				return false;
+			}
 		}
-	}
 
 	public function tagIdExists($tagid, $db) {
 		$sql = "SELECT tagid FROM tb_appt WHERE tagid = ? && isactive = 1";
@@ -77,11 +77,11 @@ class Entry {
 	}
 	
 	public function getAllGuestsByHost($hostid) {
-		$statement = $this->database->prepare("SELECT * FROM tb_appt WHERE hostid = :hostid && isactive = 1 && status_id = 1");
+		$statement = $this->database->prepare("SELECT * FROM tb_appt WHERE hostid = :hostid && isactive = 1 && status_id = 1 && DATE(checkin) = CURDATE() ORDER BY checkin DESC");
 		$statement->execute(array(':hostid' => $hostid));
 		$result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-		return $result ? $result : false;
+		return $result ? $result : 0;
 	}
 
 	public function getGuest($tagid) {
@@ -98,7 +98,7 @@ class Entry {
 		$statement->execute();
 		$result = $statement->fetch();
 
-		return !empty($result['count']) ? $result['count'] : false;
+		return !empty($result['count']) ? $result['count'] : 0;
 	}
 	
 	public function countApprovedGuests() {
@@ -106,7 +106,7 @@ class Entry {
 		$statement->execute();
 		$result = $statement->fetch();
 
-		return !empty($result['count']) ? $result['count'] : false;
+		return !empty($result['count']) ? $result['count'] : 0;
 	}
 	
 	public function countPendingGuests() {
@@ -114,15 +114,22 @@ class Entry {
 	    $statement->execute();
 	    $result = $statement->fetch();
 
-	    return !empty($result['count']) ? $result['count'] : false;
+	    return !empty($result['count']) ? $result['count'] : 0;
     }
-	
-	public function countRefused() {
+	public function countReferredGuests() {
 	    $statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 4 && isactive = 1 && DATE(checkin) = CURDATE()");
 	    $statement->execute();
 	    $result = $statement->fetch();
 
-	    return !empty($result['count']) ? $result['count'] : false;
+	    return !empty($result['count']) ? $result['count'] : 0;
+    }
+	
+	public function countRefused() {
+	    $statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 5 && isactive = 1 && DATE(checkin) = CURDATE()");
+	    $statement->execute();
+	    $result = $statement->fetch();
+
+	    return !empty($result['count']) ? $result['count'] : 0;
     }
 	
 	public function countCheckOut() {
@@ -130,7 +137,7 @@ class Entry {
 	    $statement->execute();
 	    $result = $statement->fetch();
 
-	    return !empty($result['count']) ? $result['count'] : false;
+	    return !empty($result['count']) ? $result['count'] : 0;
     }
 // function to get records day by day
 	public function getApptForToday() {
@@ -182,7 +189,7 @@ class Entry {
 		$statement->execute(array(':hostid' => $hostid));
 		$result = $statement->fetch();
 
-		return !empty($result['count']) ? $result['count'] : false;
+		return !empty($result['count']) ? $result['count'] : 0;
 	}
 	
 	public function countApprovedByHost($hostid) {
@@ -190,16 +197,45 @@ class Entry {
 		$statement->execute(array(':hostid' => $hostid));
 		$result = $statement->fetch();
 
-		return !empty($result['count']) ? $result['count'] : false;
+		return !empty($result['count']) ? $result['count'] : 0;
 	}
 	
 	public function countPendingByHost($hostid) {
-	    $statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 1 && isactive = 1 && hostid = :hostid");
+	    $statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 1 && isactive = 1 && hostid = :hostid && DATE(checkin) = CURDATE()");
 	    $statement->execute(array(':hostid' => $hostid));
 	    $result = $statement->fetch();
 
-	    return !empty($result['count']) ? $result['count'] : false;
+	    return !empty($result['count']) ? $result['count'] : 0;
     }
+	public function countRefusedByHost($hostid) {
+	    $statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 5 && isactive = 1 && hostid = :hostid && DATE(checkin) = CURDATE()");
+	    $statement->execute(array(':hostid' => $hostid));
+	    $result = $statement->fetch();
+
+	    return !empty($result['count']) ? $result['count'] : 0;
+    }
+	public function countReferByHost($hostid) {
+	    $statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 4 && isactive = 1 && hostid = :hostid && DATE(checkin) = CURDATE()");
+	    $statement->execute(array(':hostid' => $hostid));
+	    $result = $statement->fetch();
+
+	    return !empty($result['count']) ? $result['count'] : 0;
+    }
+	public function countReferTo($hostid) {
+	    $statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE status_id = 4 && isactive = 1 && referto = :hostid && DATE(checkin) = CURDATE()");
+	    $statement->execute(array(':hostid' => $hostid));
+	    $result = $statement->fetch();
+
+	    return !empty($result['count']) ? $result['count'] : 0;
+    }
+// public function to get active tagid from db in array format
+public function getActiveTag() {
+	$statement = $this->database->prepare("SELECT tagid FROM tb_appt WHERE isactive = 1 && DATE(checkin) = CURDATE()");
+	$statement->execute();
+	$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+	return $result ? $result : false;
+	}
 }
 
 ?>

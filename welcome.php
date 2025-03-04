@@ -1,15 +1,14 @@
 <?php require_once 'config/dbConnection.php';
 require_once 'config/dbConfig.php';
 
-admin();
-if (!isAdmin()) {
+superAdmin();
+if (!isAdm1n()) {
 	redirectTo('index.php');
 }
 ?>
 
 <!DOCTYPE HTML>
 <html lang="en">
-
 <head>
 	<title>Approval Desk | NIS Appointment Scheduler</title>
 	<meta name="description" content="NIS Comptroller-General Office Meeting Appointment Scheduling System" />
@@ -63,7 +62,7 @@ if (!isAdmin()) {
 				</header>
 				<div class="container-fluid pt-5">
 					<div class="mt-0 shadow p-3 mb-5 bg-white rounded">
-						<h2 class="text-center">APPROVAL DASHBOARD</h2>
+						<h2 class="text-center">SUPER ADMIN DASHBOARD</h2>
 					</div>
 					<div class=" row">
 						<div class="col-md-12">

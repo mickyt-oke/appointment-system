@@ -118,17 +118,17 @@ if (isset($_POST['register'])) {
                     <option value disabled selected>-- Select -- </option>
                     <option value="CGIS">CGIS</option>
                     <option value="PSO">PSO</option>
-                    <option value="ADMIN">PA-ADMIN</option>
+                    <option value="PA-ADMIN">PA-ADMIN</option>
                     <option value="SPECIAL">PA-SPECIAL DUTIES</option>
                     <option value="GENERAL">PA-GENERAL DUTIES</option>
                     <option value="PA-ICT">PA-ICT</option>
                     <option value="PROTOCOL">SA-PROTOCOL</option>
                     <option value="SECURITY">SA-SECURITY</option>
                     <option value="CSO">CSO</option>
-                    <option value="ACG-ICT">ACG-ICT</option>
-                    <option value="ACG-FA">DCG-F/A</option>
-                    <option value="ACG-VISA">DCG-VISA</option>
-                    <option value="CIS-ICT">CIS-ICT</option>
+                    <!-- <option value="ACG-ICT">ACG-ICT</option> -->
+                    <option value="DCG-FA">DCG-F/A</option>
+                    <option value="DCG-VISA">DCG-V/R</option>
+                    <!-- <option value="CIS-ICT">CIS-ICT</option> -->
                     <option value="ACI-ICT">ACI-ICT</option>
                     <option value="PRO">SA-PRO (ANNEX)</option>
                     <option value="FACILITY">FACILITY MANAGER</option>

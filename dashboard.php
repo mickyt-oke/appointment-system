@@ -8,38 +8,53 @@ require_once 'config/dbConfig.php';
 	</header>
 	<div class="card-body">
 		<div class="row text-white">
-			<div class="col-sm-3 col-lg-3 col-xl-3">
-				<div class="card bg-dark">
+			<div class="col-sm-4 col-lg-3 col-xl-4">
+				<div class="card bg-gradient-dark">
 					<div class="card-body  mb-0">
 						<small class="social-title">Total Registered Guests</small>
 						<h3 class="text-white text-xl mb-2"><?php echo $entry->countAll(); ?></h3>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-3 col-lg-3 col-xl-3">
-				<div class="card bg-success">
+			<div class="col-sm-4 col-lg-3 col-xl-4">
+				<div class="card bg-gradient-secondary">
+				<div class="card-body  mb-0">
+						<small class="social-title">Total  Checked-Out Guests</small>
+						<h3 class="text-xl text-white  mb-2"><?php echo $entry->countCheckOut(); ?></h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4 col-lg-3 col-xl-4">
+				<div class="card bg-gradient-success">
 					<div class="card-body  mb-0">
-						<small class="social-title">Approved Guests</small>
+						<small class="social-title">Total Approved Guests</small>
 						<h3 class="text-xl text-white  mb-2"><?php echo $entry->countApprovedGuests(); ?></h3>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-3 col-lg-3 col-xl-3">
-				<div class="card bg-warning">
+			<div class="col-sm-4 col-lg-3 col-xl-4">
+				<div class="card bg-gradient-blue">
 					<div class="card-body  mb-0">
 						<small class="social-title">Pending Appointments</small>
 						<h3 class="text-xl text-white  mb-2"><?php echo $entry->countPendingGuests(); ?></h3>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-3 col-lg-3 col-xl-3">
-				<div class="card bg-danger">
+			<div class="col-sm-4 col-lg-3 col-xl-4">
+				<div class="card bg-gradient-warning">
 					<div class="card-body  mb-0">
-						<small class="social-title">Checked-out Guests</small>
-						<h3 class="text-xl text-white  mb-2"><?php echo $entry->countCheckOut(); ?></h3>
+						<small class="social-title">Referred Appointments</small>
+						<h3 class="text-xl text-white  mb-2"><?php echo $entry->countReferredGuests(); ?></h3>
 					</div>
 				</div>
 			</div>
+			<div class="col-sm-4 col-lg-3 col-xl-4">
+				<div class="card bg-gradient-danger">
+					<div class="card-body  mb-0">
+						<small class="social-title">Refused Appointments</small>
+						<h3 class="text-xl text-white  mb-2"><?php echo $entry->countRefused(); ?></h3>
+					</div>
+				</div>
 		</div>
 	</div>
 </section>
@@ -49,8 +64,8 @@ success($message); ?>
 <div class="row">
 	<div class="col-md-12">
 		<div class="card shadow">
-			<div class="card-header">
-				<h4 class="mb-0 align-center text-danger">CHECKED IN GUESTS</h4>
+			<div class="card-header align-center">
+				<button class="btn btn-outline-light text-danger" type="button" onClick="window.location.reload();">CHECKED IN GUESTS</button>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
@@ -90,8 +105,10 @@ success($message); ?>
 												<button class="btn btn-primary btn-sm text-white">PENDING</button>
 											<?php elseif ($status['status'] == 'APPROVED'): ?>
 												<button class="btn btn-success btn-sm text-white">APPROVED</button>
-											<?php elseif ($status['status'] == 'REFERED'): ?>
+											<?php elseif ($status['status'] == 'REFERRED'): ?>
 												<button class="btn btn-danger btn-sm text-white">REFERED</button>
+											<?php elseif ($status['status'] == 'REFUSED'): ?>
+												<button class="btn btn-dark btn-sm text-white">REFUSED</button>
 											<?php elseif ($status['status'] == 'CHECKEDOUT'): ?>
 												<button class="btn btn-danger btn-sm text-white">CHECKEDOUT</button>
 											<?php endif; 
