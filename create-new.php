@@ -126,8 +126,8 @@ if (isset($_POST['register'])) {
                     <option value="SECURITY">SA-SECURITY</option>
                     <option value="CSO">CSO</option>
                     <!-- <option value="ACG-ICT">ACG-ICT</option> -->
-                    <option value="DCG-FA">DCG-F/A</option>
-                    <option value="DCG-VISA">DCG-V/R</option>
+                    <option value="DCG-FA">DCG F/A</option>
+                    <option value="DCG-VR">DCG V/R</option>
                     <!-- <option value="CIS-ICT">CIS-ICT</option> -->
                     <option value="ACI-ICT">ACI-ICT</option>
                     <option value="PRO">SA-PRO (ANNEX)</option>
