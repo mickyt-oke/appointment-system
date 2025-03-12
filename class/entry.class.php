@@ -94,7 +94,7 @@ class Entry {
 	}
 	//per day count
 	public function countAll() {
-		$statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE DATE(checkin) = CURDATE()");
+		$statement = $this->database->prepare("SELECT COUNT(*) AS count FROM tb_appt WHERE isactive = 1 && DATE(checkin) = CURDATE()");
 		$statement->execute();
 		$result = $statement->fetch();
 
@@ -230,7 +230,7 @@ class Entry {
     }
 // public function to get active tagid from db in array format
 public function getActiveTag() {
-	$statement = $this->database->prepare("SELECT tagid FROM tb_appt WHERE isactive = 1 && DATE(checkin) = CURDATE()");
+	$statement = $this->database->prepare("SELECT tagid FROM tb_appt WHERE isactive = 1 ORDER BY tagid ASC");
 	$statement->execute();
 	$result = $statement->fetchAll(PDO::FETCH_ASSOC);
 

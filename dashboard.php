@@ -81,6 +81,7 @@ success($message); ?>
 								<th>HOST</th>
 								<th>STATUS</th>
 								<th>CHECK OUT</th>
+								<th>DELETE</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -132,6 +133,25 @@ success($message); ?>
 												data-ajax-confirm-btn-no-text="Cancel"
 												data-ajax-confirm-btn-no-icon="fi fi-close">
 												Checkout
+											</a>
+										</td>
+										<!-- delete button to delete guest with ajax confirmation -->
+										<td>
+											<a href="#"
+												data-href="delete.php?delete=<?= $user['id']; ?>"
+												class="js-ajax-confirm button small"
+												data-ajax-confirm-mode="regular"
+												data-ajax-confirm-size="modal-md"
+												data-ajax-confirm-centered="false"
+												data-ajax-confirm-title="Confirm Guest Delete"
+												data-ajax-confirm-body="Are you sure you want to delete this guest record?"
+												data-ajax-confirm-btn-yes-class="btn-sm btn-danger"
+												data-ajax-confirm-btn-yes-text="Confirm"
+												data-ajax-confirm-btn-yes-icon="fi fi-check"
+												data-ajax-confirm-btn-no-class="btn-sm btn-light"
+												data-ajax-confirm-btn-no-text="Cancel"
+												data-ajax-confirm-btn-no-icon="fi fi-close">
+												Delete
 											</a>
 										</td>
 									</tr>

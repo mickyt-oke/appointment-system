@@ -44,26 +44,23 @@ header("Location: $url");
 exit();
 
 
-// post refer function to insert and update rows set hostid, status_id where id = :id
-if (isset($_POST["submit"]) && isset($_GET["refer"])) {
+// refer function to update rows set hostid, status_id, remark where id = :id
+if (isset($_POST["refer"]) && isset($_GET["refer"])) {
     $id = $_GET["refer"];
     $hostid = $_SESSION['hostid'];
-    $refer = $_POST['referto'];
     $remarks = $_POST['remarks'];
 
         try {
             // Prepare the SQL query
-            $query = "UPDATE tb_appt SET status_id = 4, approvedby = :hostid WHERE id = :id";
+            $query = "UPDATE tb_appt SET status_id = 4, hostid = :hostid, remark = :remarks WHERE id = :id";
 
             // Prepare the statement
             $statement = $connection->prepare($query);
-
             $statement->bindParam(':id', $id);
-            $statement->bindParam(':approvedby', $_SESSION['hostid']);
+            $statement->bindParam('status_id', 4);
             $statement->bindParam(':hostid', $hostid);
-            $statement->bindParam(':referto', $refer);  
-            $statement->bindParam(':remarks', $remarks);
-            $statement->execute(array(':id' => $id, ':hostid' => $hostid));
+            $statement->bindParam(':remark', $remarks);
+            $statement->execute(array(':id' => $id, ':hostid' => $hostid, ':remarks' => $remarks));
             $session->message("Appointment referred successfully");
             header('Location: dash.php');
             exit();
@@ -91,7 +88,7 @@ if (isset($_POST["submit"]) && isset($_GET["refuse"])) {
 
         try {
             // Prepare the SQL query
-            $query = "UPDATE tb_appt SET status_id = 4, approvedby = :hostid WHERE id = :id";
+            $query = "UPDATE tb_appt SET status_id = 5, approvedby = :hostid WHERE id = :id";
 
             // Prepare the statement
             $statement = $connection->prepare($query);

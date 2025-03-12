@@ -48,27 +48,26 @@ success($message); ?>
                 </div>
             </div>
             <!-- show refer button if hostid = CGIS -->
-            <?php if ($_SESSION['hostid'] == 'CGIS') {
-                echo "<div class=\"col-sm-3 col-lg-3 col-xl-3\">
-                <div class=\"card bg-danger\">
-                    <div class=\"card-body  mb-0\">
-                        <small class=\"social-title\">Referred Guests</small>
-                        <h3 class=\"text-xl text-white  mb-0\">" . $entry->countReferByHost($_SESSION['hostid']) . "</h3>
-                    </div>
-                </div>  
-            </div>";
-            } else {
-                echo "<div class=\"col-sm-3 col-lg-3 col-xl-3\">
-                <div class=\"card bg-danger\">
-                    <div class=\"card-body  mb-0\">
-                        <small class=\"social-title\">Guests Referred</small>
-                        <h3 class=\"text-xl text-white  mb-0\">" . $entry->countReferTo($_SESSION['hostid']) . "</h3>
+             <?php if ($_SESSION['hostid'] == 'CGIS') { ?>
+                <div class="col-sm-3 col-lg-3 col-xl-3">
+                    <div class="card bg-info">
+                        <div class="card-body  mb-0">
+                            <small class="social-title">Referred Guests</small>
+                            <h3 class="text-xl text-white  mb-0"><?php echo $entry->countReferByHost($_SESSION['hostid']); ?></h3>
+                        </div>
                     </div>
                 </div>
-            </div>";
-            } ?>
-
-
+                <?php } 
+                else { ?>
+                <div class="col-sm-3 col-lg-3 col-xl-3">
+                    <div class="card bg-danger">
+                        <div class="card-body  mb-0">
+                            <small class="social-title">Guests Referred</small>
+                            <h3 class="text-xl text-white  mb-0"><?php echo $entry->countReferTo($_SESSION['hostid']); ?></h3>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
         </div>
     </div>
 </section>
@@ -148,7 +147,7 @@ success($message); ?>
                             </div> -->
                                 <div class="col-md-12 mb-1">
                                     <label for="refer">Refer To</label>
-                                    <select class="form-control" name="referto" required>
+                                    <select class="form-control" name="hostid" required>
                                         <option value disabled selected>-- Select --</option>
                                         <option value="PSO">PSO</option>
                                         <option value="PA-ADMIN">PA-ADMIN</option>
